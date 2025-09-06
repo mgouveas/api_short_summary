@@ -20,6 +20,7 @@ Thumbs.db
 dist/
 build/
 out/
+tmp/
 
 # IDEs and editors
 .vscode/

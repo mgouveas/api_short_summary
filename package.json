@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "server": "node --watch server/main.js"
+    "server": "node --watch src/server/main.js"
   },
   "dependencies": {
+    "@distube/ytdl-core": "^4.16.12",
     "axios": "^1.11.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
