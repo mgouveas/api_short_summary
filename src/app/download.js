@@ -1,8 +1,13 @@
 import ytdl from '@distube/ytdl-core'
 import fs from 'fs'
 import path from 'path'
+import { parser } from './parser.js'
 
-export const download = (videoId) => {
+
+export const download = (url) => {
+    console.log("Parseando url.")
+    const videoId = parser(url)
+     
     const videoURL = "https://www.youtube.com/shorts/" + videoId
     console.log("Iniciando o download do vídeo: " + videoURL)
 
@@ -12,6 +17,7 @@ export const download = (videoId) => {
         fs.mkdirSync(dir)
     }
 
+    console.log("Realizando download do vídeo.")
     ytdl(videoURL, {quality: 'lowestaudio', filter: "audioonly"})
     .on("info", (info) => {
         const seconds = info.formats[0].approxDurationMs / 1000
