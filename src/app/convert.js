@@ -24,6 +24,7 @@ export const convert = () => new Promise((resolve, rejects) => {
         console.log("Vídeo convertido com sucesso.")
 
         resolve(floatArray)
+        fs.unlinkSync(filePath)
         fs.unlinkSync(outputPath)
     })
     .on("error", (error) => {
