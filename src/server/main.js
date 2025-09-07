@@ -2,6 +2,8 @@ import cors from 'cors'
 import express from 'express'
 
 import { download } from '../app/download.js'
+import { transcribe } from '../app/transcribe.js'
+import { convert } from '../app/convert.js'
 
 const app = express()
 app.use(cors())
@@ -18,15 +20,19 @@ app.post('/transcription', async (request, response) => {
     }
 
     try {
-        console.log("iniciando donwload do Vídeo")
+        console.log("Iniciando processo.")
         await download(url)
-        response.json({
-            message: "Download do vídeo realizado com sucesso!"
+        const audioConverted = await convert()
+
+        const transcription = await transcribe(audioConverted)
+
+        return response.json({
+            transcription: transcription
         })
     }
     catch (error) {
         console.log("Erro ao realizar o download do vídeo: " + error)
-        response.json({
+        return response.json({
             message: "Erro ao realizar o download do vídeo: " + error
         })
     }

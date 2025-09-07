@@ -3,8 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import { parser } from './parser.js'
 
-
-export const download = (url) => {
+export const download = (url) => new Promise((resolve, rejects) => {
     console.log("Parseando url.")
     const videoId = parser(url)
      
@@ -27,9 +26,11 @@ export const download = (url) => {
     })
     .on("end", () => {
         console.log("Download do vídeo finalizado.")
+        resolve()
     })
     .on("error", (error) => {
         console.log("Não foi possível fazer o download do vídeo. Detalhes do erro:", error)
+        rejects(error)
     })
     .pipe(fs.createWriteStream("./tmp/audio.mp4"))
-}
+})
